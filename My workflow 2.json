@@ -1,0 +1,98 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            },
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -400,
+        -64
+      ],
+      "id": "895e8583-57eb-4584-84aa-c9f1ec5f91a2",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "http://store.steampowered.com/feeds/daily_deals.xml",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -192,
+        -64
+      ],
+      "id": "65265c30-c027-4258-8a72-92ee7f3caac4",
+      "name": "RSS Read"
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "={{ $json.link }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        16,
+        -64
+      ],
+      "id": "e8a85036-1a67-4d3e-9578-8fdbe803189e",
+      "name": "Discord",
+      "webhookId": "2e954904-5b00-437a-a98e-e1e98e70c1b3",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "fEecETYOfqtukqlp",
+          "name": "Discord Webhook account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "7485967e-050e-4d11-b737-416e81ba8b1d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a73afce0a0ca3758cacf14a3aa0b54008a799b6922e073ba24ad5eafaef8629e"
+  },
+  "id": "ai2shWeVY5HDuWID",
+  "tags": []
+}
