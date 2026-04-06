@@ -1,0 +1,117 @@
+{
+  "name": "My workflow 3",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 6
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f90b0bb7-4d83-4725-badb-d5956d25ef05",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "cyclicredundancycheck123@gmail.com",
+          "mode": "list",
+          "cachedResultName": "cyclicredundancycheck123@gmail.com"
+        },
+        "timeMax": "={{ $now.plus({ day: 1 }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "41cf03f8-c24e-4e41-b9a2-d112de07c830",
+      "name": "Get many events",
+      "executeOnce": true,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "z0TyQuKZF9RBRSk6",
+          "name": "Google Calendar account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toRecipients": "andrew@akcsl.co.uk",
+        "subject": "=Today's Calendar",
+        "bodyContent": "={{ $json.summary }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        400,
+        0
+      ],
+      "id": "eb8ac840-834f-4253-9f0c-752b62f8dbb1",
+      "name": "Send a message",
+      "webhookId": "1234664f-a48a-40dd-b1e8-99081a6e9f50",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "UeHcRs3Znk5KKW88",
+          "name": "Microsoft Outlook account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get many events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many events": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "d7af130a-6dbb-40b0-8838-b443df58d419",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a73afce0a0ca3758cacf14a3aa0b54008a799b6922e073ba24ad5eafaef8629e"
+  },
+  "id": "RyObPjTlIaeAj3qg",
+  "tags": []
+}
